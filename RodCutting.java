@@ -1,11 +1,25 @@
 /**
+ * Name: Adam vanWestrienen
  * Rod cutting problem described in Chapter 15 of textbook
+ * 
  */
 public class RodCutting {
 
   // Do not change the parameters!
   public int rodCuttingRecur(int rodLength, int[] lengthPrices) {
-    return 0;
+    
+    // base case
+    if (rodLength == 0) {
+      return 0;
+    }
+    // set max to lowest int value
+    int max = Integer.MIN_VALUE;
+
+    // loop through lengths updating max by calling rodCutting recursively
+    for (int i = 0; i < rodLength; i++) {
+      max = Math.max(max, lengthPrices[i] + rodCuttingRecur(rodLength-i-1, lengthPrices));
+    }
+    return max;
   }
 
   // Do not change the parameters!

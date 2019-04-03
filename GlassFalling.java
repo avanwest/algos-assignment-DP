@@ -1,6 +1,7 @@
 /**
- * Glass Falling
- * Name: Adam vanWestrienen
+  Name: Adam vanWestrienen
+  Glass Falling
+
  */
 public class GlassFalling {
 
@@ -40,8 +41,42 @@ public class GlassFalling {
 
   // Do not change the parameters!
   public int glassFallingBottomUp(int floors, int sheets) {
-    // Fill in here and change the return
-    return 0;
+ 
+    // initialize table to store values
+    int table[][] = new int[sheets + 1][floors + 1];
+
+    // with one sheet we have as many drops as there are floors
+    for (int currentFloor = 0; currentFloor <= floors; currentFloor++) {
+      table[1][currentFloor] = currentFloor;
+    }
+
+    // drops are fixed for floors 0 and 1
+    for (int s = 1; s < sheets; s++) {
+      table[s][0] = 0;
+      table[s][1] = 1;
+    }
+
+    int glassGood;
+    int glassShattered;
+    // 1 sheet to total sheets available, start from floor 2 and fill in table using bottom up approach
+    for (int s = 1; s <= sheets; s++) {
+      for (int currentFloor = 2; currentFloor <= floors; currentFloor++) {
+        int minDrops = -1;
+        for (int i=1; i <= currentFloor; i++) {
+          // glass shattered so move down and test
+          glassShattered = table[s-1][i-1];
+          // glass survived the drop so move up and test
+          glassGood = table[s][currentFloor - i];
+          int maxDropsAtFloor = 1 + Math.max(glassShattered,glassGood);
+            minDrops = maxDropsAtFloor;
+            table[s][currentFloor] = minDrops;
+          }
+        }
+      }
+    
+      return table[sheets][floors];
+    }
+
   }
 
 
