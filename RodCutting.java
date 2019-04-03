@@ -24,7 +24,21 @@ public class RodCutting {
 
   // Do not change the parameters!
   public int rodCuttingBottomUp(int rodLength, int[] lengthPrices) {
-    return 0;
+    
+    // setup an array to store values and initialize to 0
+    int array[] = new int[rodLength + 1];
+    array[0] = 0;
+
+    // loop through the lengths starting at 1 
+    for (int i = 1; i <= rodLength; i++) {
+      int max = Integer.MIN_VALUE;
+      // loop through prices taking the maximum current and previous prices. update and store in array 
+      for (int j = 0; j < i; j++) {
+        max = Math.max(max, lengthPrices[j] + array[i-j-1]);
+      }
+      array[i] = max;
+    }
+    return array[rodLength];
   }
 
 
